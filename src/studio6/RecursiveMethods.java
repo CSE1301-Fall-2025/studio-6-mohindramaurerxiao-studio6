@@ -12,11 +12,24 @@ public class RecursiveMethods {
 	 *         ...)
 	 */
 	public static double geometricSum(int n) {
-		
-			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
+		double sum = Math.pow(0.5,n);
+		if (n == 0) {
+				return 0;
+			}
+		else {
+			return sum + geometricSum(n-1);
+		}
 		
 	}
+public static void main (String[] args) {
+
+		int[] test = {1,2,3,4,5};
+		int[] reverseTest = toReversed(test);
+		for (int i = 0; i < reverseTest.length; i++){
+			System.out.println (reverseTest[i]);
+		}
+		
+}
 
 	
 	/**
@@ -29,8 +42,18 @@ public class RecursiveMethods {
 	 * @param radiusMinimumDrawingThreshold radius above which drawing should occur
 	 */
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius, double radiusMinimumDrawingThreshold) {
+		if (radius <= radiusMinimumDrawingThreshold) {
+			return;
+		}
+		else {
+			StdDraw.circle(xCenter,yCenter,radius);
+			circlesUponCircles(xCenter + radius, yCenter, radius/3, radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter - radius, yCenter, radius/3, radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, yCenter + radius, radius/3, radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, yCenter - radius, radius/3, radiusMinimumDrawingThreshold);
+		}
 		
-		// FIXME complete the recursive drawing
+
 	}
 	
 
@@ -41,10 +64,19 @@ public class RecursiveMethods {
 	 * @return an array with the same data as the input but it reverse order
 	 */
 	public static int[] toReversed(int[] array) {
-		
-			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
-		
+		int i = 0;
+		int[] reversed = new int[array.length];
+		return toReversedHelper(array, reversed, i);	
+	}
+	public static int[] toReversedHelper (int[] array, int[] reversed, int i) {
+		if (i >= array.length/2.0) {
+			return reversed;
+		}
+		else {
+			reversed[i] = array[array.length-1-i];
+			reversed[array.length-1-i] = array[i];
+			return toReversedHelper(array, reversed, i + 1);
+		}
 	}
 
 	/**
